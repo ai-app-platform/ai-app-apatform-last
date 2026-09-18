@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, FolderGit2, Bot, Wrench, Plug, GitBranch,
   BookOpen, ClipboardList, Brain, Database, Settings, Menu, X,
-  ChevronDown, Sparkles, Shield, Layers
+  ChevronDown, Sparkles, Shield, Layers, Activity
 } from 'lucide-react';
 
 const navGroups = [
@@ -13,6 +13,7 @@ const navGroups = [
       { to: '/', icon: LayoutDashboard, label: 'داشبورد' },
       { to: '/projects', icon: FolderGit2, label: 'پروژه‌ها' },
       { to: '/tasks', icon: ClipboardList, label: 'تسک‌ها' },
+      { to: '/execution', icon: Activity, label: 'Execution Monitor' },
     ]
   },
   {
@@ -33,11 +34,20 @@ const navGroups = [
     ]
   },
   {
-    label: 'دانش و داده',
+    label: 'Runtime & Codebase',
+    items: [
+      { to: '/workspace', icon: FolderGit2, label: 'Workspace & Git' },
+      { to: '/codebase', icon: Database, label: 'Codebase Intelligence' },
+      { to: '/context', icon: Layers, label: 'Context Engine' },
+      { to: '/rag', icon: Database, label: 'RAG Index' },
+      { to: '/memory', icon: Brain, label: 'Memory' },
+      { to: '/trace', icon: Settings, label: 'Execution Trace' },
+    ]
+  },
+  {
+    label: 'دانش',
     items: [
       { to: '/knowledge', icon: BookOpen, label: 'Knowledge' },
-      { to: '/memory', icon: Brain, label: 'Memory' },
-      { to: '/rag', icon: Database, label: 'RAG Index' },
     ]
   },
   {

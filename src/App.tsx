@@ -9,14 +9,25 @@ import TasksPage from './pages/TasksPage';
 import ToolsPage from './pages/ToolsPage';
 import ConnectorsPage from './pages/ConnectorsPage';
 import WorkflowsPage from './pages/WorkflowsPage';
-import { TeamsPage, RolesPage, SkillsPage, KnowledgePage, MemoryPage, RAGPage } from './pages/OtherPages';
+import { TeamsPage, RolesPage, SkillsPage, KnowledgePage } from './pages/OtherPages';
+import { MemoryDetailPage, ExecutionTracePage } from './pages/MemoryTracePages';
+import { WorkspacePage, CodebasePage, RAGIndexPage } from './pages/WorkspacePages';
+import ExecutionPage from './pages/ExecutionPage';
+import ContextEnginePage from './pages/ContextEnginePage';
 import ArchitecturePage from './pages/ArchitecturePage';
+import { codebaseIntelligence } from './engine/CodebaseIntelligence';
+import { ragIndexer } from './engine/RAGIndexer';
+import { memoryManager } from './engine/ContextEngine';
 
 function AppContent() {
   const { fetchAll } = useStore();
 
   useEffect(() => {
     fetchAll();
+    // Initialize simulation engines
+    codebaseIntelligence.initMockData();
+    ragIndexer.initMockData();
+    memoryManager.initMockData();
   }, []);
 
   return (
@@ -33,8 +44,13 @@ function AppContent() {
         <Route path="/roles" element={<RolesPage />} />
         <Route path="/skills" element={<SkillsPage />} />
         <Route path="/knowledge" element={<KnowledgePage />} />
-        <Route path="/memory" element={<MemoryPage />} />
-        <Route path="/rag" element={<RAGPage />} />
+        <Route path="/memory" element={<MemoryDetailPage />} />
+        <Route path="/rag" element={<RAGIndexPage />} />
+        <Route path="/workspace" element={<WorkspacePage />} />
+        <Route path="/codebase" element={<CodebasePage />} />
+        <Route path="/execution" element={<ExecutionPage />} />
+        <Route path="/trace" element={<ExecutionTracePage />} />
+        <Route path="/context" element={<ContextEnginePage />} />
         <Route path="/architecture" element={<ArchitecturePage />} />
       </Routes>
     </Layout>
