@@ -1,0 +1,84 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: ai-app-platform
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/platform_db
+    username: ${DB_USERNAME:platform}
+    password: ${DB_PASSWORD:platform_secret}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  
+  # Spring AI Configuration
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o
+          temperature: 0.2
+  
+  # Security
+  security:
+    user:
+      name: admin
+      password: ${ADMIN_PASSWORD:admin}
+
+# Platform Configuration
+platform:
+  workspace:
+    base-path: ${WORKSPACE_PATH:/var/platform/workspaces}
+  
+  git:
+    default-branch: main
+    auto-fetch-interval: 300000  # 5 minutes
+  
+  rag:
+    qdrant:
+      host: ${QDRANT_HOST:localhost}
+      port: ${QDRANT_PORT:6334}
+      api-key: ${QDRANT_API_KEY:}
+    neo4j:
+      uri: ${NEO4J_URI:bolt://localhost:7687}
+      username: ${NEO4J_USERNAME:neo4j}
+      password: ${NEO4J_PASSWORD:neo4j}
+    embedding:
+      model: text-embedding-3-small
+      dimensions: 1536
+  
+  codebase:
+    parser-version: 2.1.0
+    index-version: 1.5.0
+    incremental-update: true
+  
+  memory:
+    runtime-path: .ai/runtime
+    long-term-promotion: true
+  
+  execution:
+    max-concurrent-tasks: 5
+    timeout-minutes: 60
+    retry-max-attempts: 3
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.platform: DEBUG
+    org.springframework.ai: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
